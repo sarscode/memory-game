@@ -46,6 +46,51 @@ let openedCards = [];
 deck.addEventListener('click', event => {
   const card = event.target;
   if (card.classList.contains('card')) {
-    card.classList.add('open', 'show');
+    openCard(card);
   }
 });
+
+function openCard(card) {
+  card.classList.add('open', 'show');
+  openedCards.push(card);
+  console.log(openedCards);
+  if (openedCards.length === 2) {
+    checkOpenedCards();
+  }
+}
+
+function checkOpenedCards() {
+  const firstCardOpened = openedCards[0].firstElementChild,
+    secondCardOpened = openedCards[1].firstElementChild;
+  if (secondCardOpened.className === firstCardOpened.className) {
+    console.log('true');
+    matchCards();
+  } else {
+    console.log('false');
+    unmatchCards(firstCardOpened, secondCardOpened);
+  }
+}
+
+// stores matched cards
+const matchedCards = [];
+
+function matchCards() {
+  const first = openedCards[0];
+  const second = openedCards[1];
+  matchedCards.push(first, second);
+  openedCards[0].classList.add('match');
+  openedCards[1].classList.add('match');
+  openedCards = [];
+}
+
+function unmatchCards(firstCardOpened, secondCardOpened) {
+  const first = firstCardOpened.parentElement.classList,
+    second = secondCardOpened.parentElement.classList;
+
+  // to persist the open cards for some seconds before close
+  setTimeout(() => {
+    first.remove('show', 'open');
+    second.remove('show', 'open');
+    openedCards = [];
+  }, 2000);
+}

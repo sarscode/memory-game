@@ -69,7 +69,7 @@ h1 {
   transform: rotateY(0);
   background: #02b3e4;
   cursor: default;
-  animation: flipCard 0.5s;
+  animation: flipOpen 0.5s;
 }
 
 .deck .card.show {
@@ -80,6 +80,7 @@ h1 {
   cursor: default;
   background: #02ccba;
   font-size: 33px;
+  animation: elastic 0.75s;
 }
 
 /*
@@ -110,7 +111,7 @@ h1 {
 }
 
 /* animates on card open */
-@keyframes flipCard {
+@keyframes flipOpen {
   from {
     transform: perspective(800px) rotate3d(0, 1, 0, 180deg);
     animation-timing-function: ease-in;
@@ -133,5 +134,27 @@ h1 {
 
   to {
     transform: perspective(800px);
+  }
+}
+
+@keyframes elastic {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  25% {
+    transform: scale3d(0.75, 0.75, 1);
+  }
+
+  50% {
+    transform: scale3d(1.4, 1.4, 1);
+  }
+
+  75% {
+    transform: scale3d(1.25, 1.25, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
