@@ -31,6 +31,9 @@ function shuffleCards() {
   shuffle(cardListArray).map(card => cards.push(card));
   // append shuffled cards
   cards.forEach(card => deck.appendChild(card));
+
+  // resets number of moves
+  moves.textContent = 0;
 }
 
 // display shuffled cards on load and reload
@@ -65,9 +68,11 @@ function checkOpenedCards() {
   if (secondCardOpened.className === firstCardOpened.className) {
     console.log('true');
     matchCards();
+    countMoves();
   } else {
     console.log('false');
     unmatchCards(firstCardOpened, secondCardOpened);
+    countMoves();
   }
 }
 
@@ -86,11 +91,22 @@ function matchCards() {
 function unmatchCards(firstCardOpened, secondCardOpened) {
   const first = firstCardOpened.parentElement.classList,
     second = secondCardOpened.parentElement.classList;
+  first.add('unmatched');
+  second.add('unmatched');
 
   // to persist the open cards for some seconds before close
   setTimeout(() => {
-    first.remove('show', 'open');
-    second.remove('show', 'open');
+    first.remove('unmatched', 'show', 'open');
+    second.remove('unmatched', 'show', 'open');
+    console.log(first, second);
     openedCards = [];
-  }, 2000);
+  }, 1300);
+}
+
+const moves = document.querySelector('.moves');
+
+function countMoves() {
+  let count = Number(moves.textContent);
+  count += 1;
+  return (moves.textContent = count);
 }

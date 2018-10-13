@@ -83,6 +83,13 @@ h1 {
   animation: elastic 0.75s;
 }
 
+.deck .card.unmatched {
+  cursor: default;
+  background: red;
+  font-size: 33px;
+  animation: unmatchedElastic 0.75s;
+}
+
 /*
  * Styles for the Score Panel
  */
@@ -139,19 +146,33 @@ h1 {
 
 @keyframes elastic {
   from {
-    transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1) rotateZ(-10deg);
   }
 
   25% {
-    transform: scale3d(0.75, 0.75, 1);
+    transform: scale3d(0.75, 0.75, 1) rotateZ(10deg);
   }
 
   50% {
-    transform: scale3d(1.4, 1.4, 1);
+    transform: scale3d(1.25, 1.25, 1) rotateZ(-20deg);
   }
 
   75% {
-    transform: scale3d(1.25, 1.25, 1);
+    transform: scale3d(1.05, 1.05, 1) rotateZ(20deg);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes unmatchedElastic {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.2, 1.2, 1.2);
   }
 
   to {
