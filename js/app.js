@@ -56,7 +56,7 @@ deck.addEventListener('click', event => {
 function openCard(card) {
   card.classList.add('open', 'show');
   openedCards.push(card);
-  console.log(openedCards);
+  // console.log(openedCards);
   if (openedCards.length === 2) {
     checkOpenedCards();
   }
@@ -66,11 +66,9 @@ function checkOpenedCards() {
   const firstCardOpened = openedCards[0].firstElementChild,
     secondCardOpened = openedCards[1].firstElementChild;
   if (secondCardOpened.className === firstCardOpened.className) {
-    console.log('true');
     matchCards();
     countMoves();
   } else {
-    console.log('false');
     unmatchCards(firstCardOpened, secondCardOpened);
     countMoves();
   }
@@ -98,9 +96,8 @@ function unmatchCards(firstCardOpened, secondCardOpened) {
   setTimeout(() => {
     first.remove('unmatched', 'show', 'open');
     second.remove('unmatched', 'show', 'open');
-    console.log(first, second);
     openedCards = [];
-  }, 1300);
+  }, 1100);
 }
 
 const moves = document.querySelector('.moves');
@@ -108,5 +105,20 @@ const moves = document.querySelector('.moves');
 function countMoves() {
   let count = Number(moves.textContent);
   count += 1;
+  ratePlayer(count);
   return (moves.textContent = count);
+}
+
+const star = document.querySelectorAll('.fas.fa-star');
+const stars = Array.from(star);
+
+/* Player rating */
+function ratePlayer(count) {
+  console.log(stars);
+  if (count > 8 && count <= 15) {
+    stars[stars.length - 1].className = 'far fa-star';
+  }
+  if (count >= 16) {
+    stars[stars.length - 2].className = 'far fa-star';
+  }
 }
