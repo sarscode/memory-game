@@ -31,17 +31,30 @@ function shuffleCards() {
   shuffle(cardListArray).map(card => cards.push(card));
   // append shuffled cards
   cards.forEach(card => deck.appendChild(card));
-
-  // resets number of moves
-  moves.textContent = 0;
 }
 
 // display shuffled cards on load and reload
-document.addEventListener('DOMContentLoaded', shuffleCards);
+document.addEventListener('DOMContentLoaded', startGame);
 
 // Resets game
 const reset = document.querySelector('.restart');
-reset.addEventListener('click', shuffleCards);
+reset.addEventListener('click', startGame);
+
+// start game
+function startGame() {
+  // shuffle cards on new game
+  shuffleCards();
+  // reset timer to default
+  clearInterval(timeStamp);
+  // resets number of moves
+  moves.textContent = 0;
+  // display default time
+  time.textContent = '0 hours 0 mins 0 secs';
+  // reset stars
+  stars.forEach(star => {
+    star.className = 'fas fa-star';
+  });
+}
 
 // Stores opened cards
 let openedCards = [];
@@ -106,6 +119,9 @@ function countMoves() {
   let count = Number(moves.textContent);
   count += 1;
   ratePlayer(count);
+  if (count === 1) {
+    startTimer();
+  }
   return (moves.textContent = count);
 }
 
@@ -115,10 +131,34 @@ const stars = Array.from(star);
 /* Player rating */
 function ratePlayer(count) {
   console.log(stars);
-  if (count > 8 && count <= 15) {
+  if (count > 8 && count < 15) {
     stars[stars.length - 1].className = 'far fa-star';
   }
-  if (count >= 16) {
+  if (count >= 15) {
     stars[stars.length - 2].className = 'far fa-star';
   }
 }
+
+let second, minute, hour, timeStamp;
+const time = document.querySelector('.time');
+
+// calculate game time
+function startTimer() {
+  second = 0;
+  minute = 0;
+  hour = 0;
+  timeStamp = setInterval(() => {
+    time.textContent = `${hour} hours ${minute} mins ${second} secs`;
+    second++;
+    if (second === 60) {
+      minute++;
+      second = 0;
+    }
+    if (minute === 60) {
+      hour++;
+      minute = 0;
+    }
+  }, 1000);
+}
+
+/* TODO: Disable the rest cards to avoid more than two cards to be clicked */

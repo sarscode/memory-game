@@ -69,7 +69,7 @@ h1 {
   transform: rotateY(0);
   background: #02b3e4;
   cursor: default;
-  animation: flipOpen 0.5s;
+  animation: flipOpen 0.3s;
 }
 
 .deck .card.show {
@@ -95,8 +95,10 @@ h1 {
  */
 
 .score-panel {
+  display: flex;
+  justify-content: space-between;
   text-align: left;
-  width: 345px;
+  width: 520px;
   margin-bottom: 10px;
 }
 
