@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Matching Game</title>
     <meta name="description" content="">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
         crossorigin="anonymous">
@@ -21,6 +22,7 @@
 
         <section class="score-panel">
             <ul class="stars">
+                Rating:
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
@@ -86,6 +88,16 @@
                 <i class="fas fa-glasses"></i>
             </li>
         </ul>
+    </div>
+    <div class="modal">
+        <div class="content">
+            <h2>🎉 Hurray !!! 🎉</h2>
+            <h2>You Matched All Cards</h2>
+            <p>You made <strong><span id=moves></span></strong> moves in <strong><span id=total-time></span></strong></p>
+            <p>You've got <strong><span id=rating></span></strong></p>
+            <p>Woohoo!!! Congratulations, you deserve this 🏆</p>
+            <button class="play-again">Play Again</button>
+        </div>
     </div>
 
     <script src="js/app.js"></script>

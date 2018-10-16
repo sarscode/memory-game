@@ -49,7 +49,7 @@ function startGame() {
   // resets number of moves
   moves.textContent = 0;
   // display default time
-  time.textContent = '0 hours 0 mins 0 secs';
+  time.textContent = '0 mins : 0 secs';
   // reset stars
   stars.forEach(star => {
     star.className = 'fas fa-star';
@@ -59,12 +59,14 @@ function startGame() {
 // Stores opened cards
 let openedCards = [];
 
-deck.addEventListener('click', event => {
+function click(event) {
   const card = event.target;
   if (card.classList.contains('card')) {
     openCard(card);
   }
-});
+}
+
+deck.addEventListener('click', click);
 
 function openCard(card) {
   card.classList.add('open', 'show');
@@ -72,19 +74,31 @@ function openCard(card) {
   // console.log(openedCards);
   if (openedCards.length === 2) {
     checkOpenedCards();
+    countMoves();
   }
 }
 
+// Disable click
+function disableCards() {
+  deck.removeEventListener('click', click);
+}
+
+// Enable click
+function enableCards() {
+  deck.addEventListener('click', click);
+}
+
 function checkOpenedCards() {
+  // disable cards temporarily to avoid multiple clicks
+  disableCards();
   const firstCardOpened = openedCards[0].firstElementChild,
     secondCardOpened = openedCards[1].firstElementChild;
   if (secondCardOpened.className === firstCardOpened.className) {
     matchCards();
-    countMoves();
   } else {
     unmatchCards(firstCardOpened, secondCardOpened);
-    countMoves();
   }
+  setTimeout(enableCards, 1100);
 }
 
 // stores matched cards
@@ -97,6 +111,9 @@ function matchCards() {
   openedCards[0].classList.add('match');
   openedCards[1].classList.add('match');
   openedCards = [];
+  if (matchedCards.length === 16) {
+    setTimeout(completed, 1000);
+  }
 }
 
 function unmatchCards(firstCardOpened, secondCardOpened) {
@@ -128,14 +145,16 @@ function countMoves() {
 const star = document.querySelectorAll('.fas.fa-star');
 const stars = Array.from(star);
 
+let starsCount;
 /* Player rating */
 function ratePlayer(count) {
-  console.log(stars);
-  if (count > 8 && count < 15) {
+  if (count > 12 && count < 15) {
     stars[stars.length - 1].className = 'far fa-star';
+    starsCount = 2;
   }
   if (count >= 15) {
     stars[stars.length - 2].className = 'far fa-star';
+    starsCount = 1;
   }
 }
 
@@ -148,17 +167,43 @@ function startTimer() {
   minute = 0;
   hour = 0;
   timeStamp = setInterval(() => {
-    time.textContent = `${hour} hours ${minute} mins ${second} secs`;
+    time.textContent = `${minute} mins : ${second} secs`;
     second++;
     if (second === 60) {
       minute++;
       second = 0;
     }
     if (minute === 60) {
-      hour++;
-      minute = 0;
+      startGame();
     }
   }, 1000);
 }
 
-/* TODO: Disable the rest cards to avoid more than two cards to be clicked */
+const modal = document.querySelector('.modal');
+
+function completed() {
+  openModal();
+  let starRating = document.querySelector('.stars').innerHTML;
+  clearInterval(timeStamp);
+
+  // total moves
+  document.getElementById('moves').textContent = countMoves();
+  // total time taken
+  document.getElementById('total-time').textContent = time.textContent;
+  document.getElementById('rating').innerHTML =
+    starsCount === 1
+      ? `🏅 ${starsCount} star`
+      : starsCount === 2
+        ? `🏅🏅 ${starsCount} stars`
+        : `🏅🏅🏅 ${starsCount} stars`;
+  const playAgainBtn = document.querySelector('.play-again');
+
+  playAgainBtn.addEventListener('click', () => {
+    startGame();
+    modal.classList.remove('open-modal');
+  });
+}
+
+function openModal() {
+  modal.classList.add('open-modal');
+}

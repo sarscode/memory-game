@@ -1,5 +1,5 @@
-# Memory Game Project
+# Memory Game
 
-Udacity Front-End Web Developer Nanodegree project.
+The Memory Game is a web-based application that runs on the browser.
 
 ## Table of Contents

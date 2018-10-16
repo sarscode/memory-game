@@ -90,6 +90,9 @@ h1 {
   animation: unmatchedElastic 0.75s;
 }
 
+.disable {
+  cursor: default;
+}
 /*
  * Styles for the Score Panel
  */
@@ -112,12 +115,51 @@ h1 {
 .score-panel .stars li {
   list-style: none;
   display: inline-block;
-  color: yellow;
+  color: orange;
 }
 
 .score-panel .restart {
   float: right;
   cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: -2000;
+  background: white;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.open-modal {
+  display: block;
+  transition: top 2s;
+  top: 0;
+}
+
+.content {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 50%;
+  height: 100%;
+}
+
+.play-again {
+  background: #02ccba;
+  border: none;
+  padding: 1em 2em;
+}
+
+.play-again:hover {
+  background: #02bebe;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+  color: #fff;
 }
 
 /* animates on card open */
